@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:14.18
+    ports:
+      - "5555:5432"
+    environment:
+      - POSTGRES_USER=kekich
+      - POSTGRES_PASSWORD=5454
+      - POSTGRES_DB=molo
+    restart: always
