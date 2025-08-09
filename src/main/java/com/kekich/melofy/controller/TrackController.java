@@ -36,5 +36,32 @@ public class TrackController {
     }
 
 
+    @GetMapping("/files/{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Path filePath = Paths.get("uploads").resolve(filename); // путь к папке с файлами
+        Resource file = new FileSystemResource(filePath);
+
+        if (!file.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Определяем Content-Type по расширению
+        MediaType mediaType;
+        if (filename.toLowerCase().endsWith(".mp3")) {
+            mediaType = MediaType.valueOf("audio/mpeg");
+        } else if (filename.toLowerCase().endsWith(".png")) {
+            mediaType = MediaType.IMAGE_PNG;
+        } else if (filename.toLowerCase().endsWith(".jpg") || filename.toLowerCase().endsWith(".jpeg")) {
+            mediaType = MediaType.IMAGE_JPEG;
+        } else {
+            mediaType = MediaType.APPLICATION_OCTET_STREAM;
+        }
+
+        return ResponseEntity.ok()
+                .contentType(mediaType)
+                .body(file);
+    }
+
+
 
 }

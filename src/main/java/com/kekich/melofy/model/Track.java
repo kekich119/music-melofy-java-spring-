@@ -22,5 +22,6 @@ public class Track {
     @Column(name = "icon_url")
     private String icon_url;
 
+    @Column(name = "track_url")
     private String track_url;
 }
